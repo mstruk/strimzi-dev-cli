@@ -6,12 +6,12 @@ This image contains all the dependencies required to build Strimzi Kafka Operato
 Building
 --------
 
-docker --tag strimzi/strimzi-dev build .
+docker --tag strimzi/strimzi-dev-cli build .
 
 
 Using
 -----
 
-docker run --rm -ti -name strimzi-dev strimzi/strimzi-dev:latest /bin/sh
+docker run --rm -ti -name strimzi-dev-cli strimzi/strimzi-dev-cli:latest /bin/sh
 
 

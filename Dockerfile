@@ -3,7 +3,7 @@ FROM centos:7
 RUN yum update -y \
   yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm \
   && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
-  && yum install -y java-1.8.0-openjdk maven make ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
+  && yum install -y java-1.8.0-openjdk maven make git ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
   && gem install asciidoctor \
   && curl -L -O https://github.com/mikefarah/yq/releases/download/3.1.1/yq_linux_amd64 \
   && mv yq_linux_amd64 /usr/local/bin/yq \

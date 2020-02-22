@@ -17,3 +17,6 @@ repo_gpgcheck=1\n\
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'\
   >> /etc/yum.repos.d/kubernetes.repo \
   && yum install -y kubectl
+RUN curl -Lo kind "https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64" \
+  && chmod +x kind \
+  && mv kind /usr/local/bin/kind

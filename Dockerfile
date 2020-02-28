@@ -3,8 +3,9 @@ FROM centos:7
 RUN yum update -y \
   && yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm \
   && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
-  && yum install -y java-1.8.0-openjdk maven make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
-  && gem install asciidoctor
+  && yum install -y which java-1.8.0-openjdk-devel make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
+  && gem install asciidoctor \
+  && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile
 RUN echo $'[kubernetes]\n\
 name=Kubernetes\n\
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64\n\
@@ -27,4 +28,10 @@ RUN curl -LO "https://get.helm.sh/helm-v3.1.1-linux-amd64.tar.gz" \
   && tar -zxvf helm-v3.1.1-linux-amd64.tar.gz \
   && mv linux-amd64/helm /usr/local/bin/helm \
   && rm -rf linux-amd64 helm-v3.1.1-linux-amd64.tar.gz
+RUN curl -LO "https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz" \
+  && echo "26ad91d751b3a9a53087aefa743f4e16a17741d3915b219cf74112bf87a438c5 apache-maven-3.6.3-bin.tar.gz" | sha256sum -c - \
+  && cd /opt \
+  && tar -zxvf /apache-maven-3.6.3-bin.tar.gz \
+  && ln -s -t /usr/local/bin /opt/apache-maven-3.6.3/bin/{mvn,mvnDebug} \
+  && cd / && rm apache-maven-3.6.3-bin.tar.gz
 

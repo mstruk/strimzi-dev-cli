@@ -15,9 +15,9 @@ repo_gpgcheck=1\n\
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'\
   >> /etc/yum.repos.d/kubernetes.repo \
   && yum install -y kubectl
-RUN curl -Lo yq "https://github.com/mikefarah/yq/releases/download/3.2.0/yq_linux_amd64" \
+RUN curl -Lo yq "https://github.com/mikefarah/yq/releases/download/3.2.1/yq_linux_amd64" \
   && mv yq /usr/local/bin/yq \
-  && echo "c65bd70715727e3348a8993ea578aff93971e2c6ece25e9f06a7c3e56664f6ff /usr/local/bin/yq" | sha256sum -c - \
+  && echo "11a830ffb72aad0eaa7640ef69637068f36469be4f68a93da822fbe454e998f8 /usr/local/bin/yq" | sha256sum -c - \
   && chmod +x /usr/local/bin/yq
 RUN curl -Lo kind "https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64" \
   && mv kind /usr/local/bin/kind \

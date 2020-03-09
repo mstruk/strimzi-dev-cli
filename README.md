@@ -12,6 +12,6 @@ docker --tag strimzi/strimzi-dev-cli build .
 Using
 -----
 
-docker run --rm -ti -name strimzi-dev-cli strimzi/strimzi-dev-cli:latest /bin/sh
+docker run -ti -name strimzi-dev-cli strimzi/strimzi-dev-cli:latest /bin/sh
 
 

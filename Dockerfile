@@ -34,4 +34,4 @@ RUN curl -LO "https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-m
   && tar -zxvf /apache-maven-3.6.3-bin.tar.gz \
   && ln -s -t /usr/local/bin /opt/apache-maven-3.6.3/bin/{mvn,mvnDebug} \
   && cd / && rm apache-maven-3.6.3-bin.tar.gz
-ENV PS1="strimzi-cli:\W \\$ " 
+ENV PS1="strimzi-cli:\W\\$ " 

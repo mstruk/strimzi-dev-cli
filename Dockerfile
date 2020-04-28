@@ -5,7 +5,8 @@ RUN yum update -y \
   && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
   && yum install -y which java-1.8.0-openjdk-devel make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
   && gem install asciidoctor \
-  && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile
+  && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile \
+  && echo "Build 2020-04-28T09:02:00" > /root/VERSION
 RUN echo $'[kubernetes]\n\
 name=Kubernetes\n\
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64\n\

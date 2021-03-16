@@ -7,7 +7,7 @@ RUN yum update -y \
   && alternatives --set java java-11-openjdk.x86_64
   && gem install asciidoctor \
   && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile \
-  && echo "Build 2021-03-07T10:39:00" > /root/VERSION
+  && echo "Build 2021-03-16T14:45:00" > /root/VERSION
 RUN echo $'[kubernetes]\n\
 name=Kubernetes\n\
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64\n\

@@ -4,7 +4,7 @@ RUN yum update -y \
   && yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.4.3-3.1.el7.x86_64.rpm \
   && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
   && yum install -y which java-11-openjdk-devel make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
-  && alternatives --set java java-11-openjdk.x86_64
+  && alternatives --set java java-11-openjdk.x86_64 \
   && gem install asciidoctor \
   && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile \
   && echo "Build 2021-03-16T14:45:00" > /root/VERSION

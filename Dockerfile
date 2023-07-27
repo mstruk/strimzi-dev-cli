@@ -3,11 +3,18 @@ FROM centos:7
 RUN yum update -y \
   && yum install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.4.3-3.1.el7.x86_64.rpm \
   && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
-  && yum install -y which java-11-openjdk-devel make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
-  && alternatives --set java java-11-openjdk.x86_64 \
+  && yum install -y which make git unzip ruby yum-utils device-mapper-persistent-data lvm2 openssl docker-ce \
   && gem install asciidoctor \
-  && echo "export JAVA_HOME=/etc/alternatives/java_sdk_openjdk" >> /root/.bash_profile \
-  && echo "Build 2021-03-16T14:45:00" > /root/VERSION
+  && echo "echo \"You may want to run \'yum update -y\' to update the system packages\"" >> /root/.bash_profile \
+  && echo "Build 2023-07-27T15:10:00" > /root/VERSION
+RUN curl -LO https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8%2B7/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz \
+  && echo "aa5fc7d388fe544e5d85902e68399d5299e931f9b280d358a3cbee218d6017b0 OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz" | sha256sum -c - \
+  && tar -xvf OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz \
+  && rm -f OpenJDK17U-jdk_x64_linux_hotspot_17.0.8_7.tar.gz \
+  && mv jdk-17.* /opt/jdk-17 \
+  && echo "export JAVA_HOME=/opt/jdk-17" >> /root/.bash_profile \
+  && echo 'export PATH=$PATH:$JAVA_HOME/bin' >> /root/.bash_profile \
+  && alternatives --install /usr/bin/java java /opt/jdk-17/bin/java 1
 RUN echo $'[kubernetes]\n\
 name=Kubernetes\n\
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64\n\
@@ -30,10 +37,15 @@ RUN curl -LO "https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz" \
   && tar -zxvf helm-v3.5.2-linux-amd64.tar.gz \
   && mv linux-amd64/helm /usr/local/bin/helm \
   && rm -rf linux-amd64 helm-v3.5.2-linux-amd64.tar.gz
-RUN curl -LO "https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz" \
-  && echo "26ad91d751b3a9a53087aefa743f4e16a17741d3915b219cf74112bf87a438c5 apache-maven-3.6.3-bin.tar.gz" | sha256sum -c - \
+RUN curl -LO "https://downloads.apache.org/maven/maven-3/3.9.3/binaries/apache-maven-3.9.3-bin.tar.gz" \
+  && echo "e1e13ac0c42f3b64d900c57ffc652ecef682b8255d7d354efbbb4f62519da4f1 apache-maven-3.9.3-bin.tar.gz" | sha256sum -c - \
   && cd /opt \
-  && tar -zxvf /apache-maven-3.6.3-bin.tar.gz \
-  && ln -s -t /usr/local/bin /opt/apache-maven-3.6.3/bin/{mvn,mvnDebug} \
-  && cd / && rm apache-maven-3.6.3-bin.tar.gz
+  && tar -zxvf /apache-maven-3.9.3-bin.tar.gz \
+  && ln -s -t /usr/local/bin /opt/apache-maven-3.9.3/bin/{mvn,mvnDebug} \
+  && cd / && rm -f apache-maven-3.9.3-bin.tar.gz
+RUN curl -LO "https://github.com/koalaman/shellcheck/releases/download/v0.9.0/shellcheck-v0.9.0.linux.x86_64.tar.xz" \
+  && tar xvf shellcheck-v0.9.0.linux.x86_64.tar.xz \
+  && mv shellcheck-v0.9.0/shellcheck /usr/local/bin/shellcheck \
+  && echo "7087178d54de6652b404c306233264463cb9e7a9afeb259bb663cc4dbfd64149 /usr/local/bin/shellcheck" | sha256sum -c - \
+  && rm -rf shellcheck-v0.9.0 shellcheck-v0.9.0.linux.x86_64.tar.xz
 ENV PS1="strimzi-cli:\W\\$ " 
